@@ -51,10 +51,8 @@ const GameScreen = ({room, playerId}) => {
   useEffect(()=> {
     //listen for the room info
     onValue(ref(database, `rooms/${room}`), snapshot => {
-      if(snapshot.val()) {
-        console.log(snapshot.val());  
+      if(snapshot.val()) { 
         setGame(snapshot.val());
-
 
         //data will be an array of players
         const playersArray = [];
@@ -64,11 +62,9 @@ const GameScreen = ({room, playerId}) => {
 
         //we have a consensus if all players answered like first player
         if ( typeof playersArray[0].answer !== "undefined"  && playersArray.every(player => player.answer === playersArray[0].answer)) {
-          console.log('we have a consensus, ' + playersArray[0].answer);
           setConsensus(true);
           setEnabled(false);
           
-    
           if (snapshot.val().package[snapshot.val().currentQuestion - 1].answers[playersArray[0].answer].correct === true) {
                     
             delay(1000, ()=> {
