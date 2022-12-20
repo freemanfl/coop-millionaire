@@ -19,7 +19,6 @@ const Chat = ({room, playerId}) => {
   // 1. Function that runs when user sends the form
   const sendMessage = () => {
     if(messageInputRef.current.value !== '') {
-      console.log(messages);
       const messageData = {
         author: playerId,
         body: messageInputRef.current.value,
@@ -45,7 +44,6 @@ const Chat = ({room, playerId}) => {
     onValue(ref(database, `players/${playerId}/name`), snapshot => {
       if(snapshot) {
         setName(snapshot.val());
-      console.log(snapshot.val());
       } 
     })
   }, [])

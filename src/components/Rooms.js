@@ -106,8 +106,6 @@ const Rooms = ({playerId}) => {
         delete question.incorrect_answers;
 
       });
-      console.log(data);
-
 
     }).catch((err)=>
         console.log(err)

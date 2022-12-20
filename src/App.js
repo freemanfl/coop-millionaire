@@ -16,7 +16,6 @@ let playersRoomRef;
 let playersChatRef;
 
 function App() {
-  console.log('app rendered');
   const [playerIdState, setPlayerIdState] = useState(null);
   const [room, setRoom] = useState(null);
   const [gameOn, setGameOn] = useState(false);
@@ -50,7 +49,6 @@ useEffect(()=> {
         { 
           setRoom(roomSnapshot.val());
           onValue(ref(database, `rooms/${roomSnapshot.val()}/gameOn`), gameOnSnapshot => {
-            console.log(gameOnSnapshot.val());
               if(gameOnSnapshot.val() === true) {
                 setGameOn(true);
               }

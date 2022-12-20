@@ -27,13 +27,12 @@ const Lobby = ({playerId, setGameOn}) => {
     const [room, setRoom] = useState(null);
     const [players, setPlayers] = useState(null);
     const readyButton = useRef();
-    console.log('lobby rendered');
+    
 
     useEffect(()=> {
         //listen for player's room and set the state
         onValue(ref(database, `players/${playerId}/room`), roomSnapshot => {
             if(roomSnapshot.val()) {
-                console.log(roomSnapshot.val());
                 setRoom(roomSnapshot.val());
                 
                 //listen for the players in player's room, then set the overall game and all players state
