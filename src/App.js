@@ -4,7 +4,6 @@ import {auth, database} from "./firebase.js";
 import { signInAnonymously, onAuthStateChanged,   } from "firebase/auth";
 import { set, ref, onDisconnect, onValue,  } from "firebase/database";
 import Rooms from './components/Rooms';
-import ChangeName from './components/ChangeName';
 import Lobby from './components/Lobby';
 import GameScreen from './components/GameScreen';
 import Chat from './components/Chat';
@@ -19,7 +18,7 @@ function App() {
   const [playerIdState, setPlayerIdState] = useState(null);
   const [room, setRoom] = useState(null);
   const [gameOn, setGameOn] = useState(false);
-
+  const [packageLoaded, setPackageLoaded] = useState(false);
   
 useEffect(()=> {
   onAuthStateChanged(auth, (user) => {
@@ -86,8 +85,8 @@ useEffect(()=> {
 
   return (
     <div className="App">
-        {room ? <Chat room={room} playerId={playerIdState} /> : <Rooms playerId={playerIdState}/>}
-        {gameOn ? <GameScreen room={room} playerId={playerIdState}  /> : <Lobby playerId={playerIdState} setGameOn={setGameOn}/>}
+        {room ? <Chat room={room} playerId={playerIdState} /> : <Rooms playerId={playerIdState} setPackageLoaded={setPackageLoaded}/>}
+        {(gameOn && packageLoaded) ? <GameScreen room={room} playerId={playerIdState}  /> : <Lobby playerId={playerIdState} setGameOn={setGameOn} />}
     </div>
 
   );

@@ -25,12 +25,12 @@ function getRandomInt(min, max) {
 }
 let data = [];
 
-const Rooms = ({playerId}) => {
+const Rooms = ({playerId, setPackageLoaded}) => {
 
   const [roomsList, setRoomsList] = useState(null); 
   const [name, setName] = useState('Anonymous');
   const inputNameRef = useRef(null);
-
+  
 
   let clickedRoomId;
 
@@ -107,7 +107,7 @@ const Rooms = ({playerId}) => {
 
       });
 
-    }).catch((err)=>
+    }).then(setPackageLoaded(true)).catch((err)=>
         console.log(err)
    );
     

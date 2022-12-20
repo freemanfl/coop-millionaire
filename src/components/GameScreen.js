@@ -29,8 +29,8 @@ const GameScreen = ({room, playerId}) => {
     []
   );
   const [game, setGame] = useState(null);
+  
   const [consensus, setConsensus] = useState(false);
-  const [timeOut, setTimeOut] = useState(false);
   const [earned, setEarned] = useState("$ 0");
   const [stop, setStop] = useState(null);
   const answersRef = useRef();
@@ -64,7 +64,7 @@ const GameScreen = ({room, playerId}) => {
         if ( typeof playersArray[0].answer !== "undefined"  && playersArray.every(player => player.answer === playersArray[0].answer)) {
           setConsensus(true);
           setEnabled(false);
-          
+
           if (snapshot.val().package[snapshot.val().currentQuestion - 1].answers[playersArray[0].answer].correct === true) {
                     
             delay(1000, ()=> {
