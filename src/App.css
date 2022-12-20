@@ -294,8 +294,8 @@ input:checked + .slider:before {
   padding: 5px;
 }
 
-.chat h1 {
-  line-height: 1.2rem
+h3 {
+  margin: 5px;
 }
 
 
@@ -325,7 +325,7 @@ input:checked + .slider:before {
 background-color: orange;
 border-radius: 15px;
 padding: 4px 8px;
-max-width: 70%;
+max-width: 60%;
 word-break: break-all;
     white-space: normal;
 }
@@ -348,7 +348,7 @@ word-break: break-all;
 .send-container {
   display: flex;
   width: 100%;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 .answers {
   
