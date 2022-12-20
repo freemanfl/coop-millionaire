@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/coop-millionaire/static/css/main.4c901365.css",
+    "main.js": "/coop-millionaire/static/js/main.6c623b90.js",
+    "static/js/787.0b7fb634.chunk.js": "/coop-millionaire/static/js/787.0b7fb634.chunk.js",
+    "index.html": "/coop-millionaire/index.html",
+    "main.4c901365.css.map": "/coop-millionaire/static/css/main.4c901365.css.map",
+    "main.6c623b90.js.map": "/coop-millionaire/static/js/main.6c623b90.js.map",
+    "787.0b7fb634.chunk.js.map": "/coop-millionaire/static/js/787.0b7fb634.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4c901365.css",
+    "static/js/main.6c623b90.js"
+  ]
+}
