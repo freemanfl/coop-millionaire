@@ -67,7 +67,7 @@ const Lobby = ({playerId, setGameOn}) => {
         { players?
             <>
                 
-                <h1>Lobby</h1>
+                <h3>Lobby</h3>
             
                 <div className="lobby-players">
                     {players.map(player => {

@@ -64,7 +64,7 @@ const Chat = ({room, playerId}) => {
 
   return (
     <div className='chat'>
-        <h1>Chat</h1>
+        <h3>Chat</h3>
         <ul className='messages'>
           {error && <strong>Error: {error}</strong>}
           {loading && <span>List: Loading...</span>}
