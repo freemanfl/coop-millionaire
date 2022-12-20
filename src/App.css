@@ -294,6 +294,11 @@ input:checked + .slider:before {
   padding: 5px;
 }
 
+.chat h1 {
+  line-height: 1.2rem
+}
+
+
 .messages {
   width: 100%;
   height: 100%;
