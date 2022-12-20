@@ -5,7 +5,7 @@ import { update, ref, onValue } from "firebase/database";
 
 
 
-const Lobby = ({playerId}) => {
+const Lobby = ({playerId, setGameOn}) => {
 
     const toggleReady = ()=> {
         if(readyButton.current.checked ) {
@@ -46,9 +46,13 @@ const Lobby = ({playerId}) => {
                           setPlayers(data);
 
                         if(data.every(areOthersReady)) {
-                            update(ref(database, `rooms/${roomSnapshot.val()}/`), {
-                                gameOn: true,
-                            }); 
+                            setTimeout(()=> {
+                                update(ref(database, `rooms/${roomSnapshot.val()}/`), {
+                                    gameOn: true,
+                                }); 
+                                setGameOn(true);
+                                
+                            }, 1000)
                         }
                     }
                 })
@@ -94,7 +98,7 @@ const Lobby = ({playerId}) => {
             </>
                
 
-         : 'waiting' }
+         : <div className='pre-lobby'> <h1>Create or join a room</h1> </div> }
 
     </div>
   )

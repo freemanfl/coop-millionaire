@@ -4,7 +4,7 @@ import {auth, database} from "./firebase.js";
 import { signInAnonymously, onAuthStateChanged,   } from "firebase/auth";
 import { set, ref, onDisconnect, onValue,  } from "firebase/database";
 import Rooms from './components/Rooms';
-import CreateRoom from './components/CreateRoom';
+import ChangeName from './components/ChangeName';
 import Lobby from './components/Lobby';
 import GameScreen from './components/GameScreen';
 import Chat from './components/Chat';
@@ -13,7 +13,7 @@ let playerId;
 
 let playerRef;
 let playersRoomRef;
-
+let playersChatRef;
 
 function App() {
   console.log('app rendered');
@@ -35,6 +35,7 @@ useEffect(()=> {
       // 2 set needed refs
       playerRef = ref(database, `players/${playerId}`);
       playersRoomRef = ref(database, `rooms/${playerId}`);
+      playersChatRef = ref(database, `chats/${playerId}`);
       
       //set inital player state
       set(playerRef, {
@@ -62,6 +63,7 @@ useEffect(()=> {
       //Remove my user from firebase when i leave
       onDisconnect(playerRef).remove();
       onDisconnect(playersRoomRef).remove();
+      onDisconnect(playersChatRef).remove();
       //Begin the game now that we are signed in
       
     } else {
@@ -86,9 +88,8 @@ useEffect(()=> {
 
   return (
     <div className="App">
-        {!room && <CreateRoom  playerId={playerIdState} />}
-        {room ? <Chat room={room} /> : <Rooms playerId={playerIdState}/>}
-        {gameOn ? <GameScreen room={room} playerId={playerIdState}/> : <Lobby playerId={playerIdState} />}
+        {room ? <Chat room={room} playerId={playerIdState} /> : <Rooms playerId={playerIdState}/>}
+        {gameOn ? <GameScreen room={room} playerId={playerIdState}  /> : <Lobby playerId={playerIdState} setGameOn={setGameOn}/>}
     </div>
 
   );

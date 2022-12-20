@@ -1,10 +1,11 @@
 import '../App.css';
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { database} from "../firebase.js";
-import { update, ref, onValue } from "firebase/database";
+import { update, ref, onValue, remove } from "firebase/database";
+import Timer from './Timer';
 
 
-const GameScreen = ({room, playerId  }) => {
+const GameScreen = ({room, playerId}) => {
 
   const moneyPyramid = useMemo(
     () =>
@@ -27,70 +28,136 @@ const GameScreen = ({room, playerId  }) => {
       ].reverse(),
     []
   );
-  const [questionNumber, setQuestionNumber] = useState(1);
   const [game, setGame] = useState(null);
-  const [className, setClassName] = useState('answer');
+  const [consensus, setConsensus] = useState(false);
+  const [timeOut, setTimeOut] = useState(false);
+  const [earned, setEarned] = useState("$ 0");
+  const [stop, setStop] = useState(null);
+  const answersRef = useRef();
+  const [enabled, setEnabled] = useState(true);
 
+  const delay = (duration, callback) => {
+      setTimeout(()=> {
+        callback();
+      }, duration)
+  }
 
 
   useEffect(()=> {
+    game && game.currentQuestion > 1 && setEarned(moneyPyramid.find(m=> m.id === game.currentQuestion - 1).amount)
+  }, [game, moneyPyramid])
+
+
+  useEffect(()=> {
+    //listen for the room info
     onValue(ref(database, `rooms/${room}`), snapshot => {
       if(snapshot.val()) {
         console.log(snapshot.val());  
-        setGame(snapshot.val())
+        setGame(snapshot.val());
+
+
+        //data will be an array of players
+        const playersArray = [];
+        Object.keys(snapshot.val().players).map((key)=> {
+          playersArray.push(snapshot.val().players[key]);
+        })
+
+        //we have a consensus if all players answered like first player
+        if ( typeof playersArray[0].answer !== "undefined"  && playersArray.every(player => player.answer === playersArray[0].answer)) {
+          console.log('we have a consensus, ' + playersArray[0].answer);
+          setConsensus(true);
+          setEnabled(false);
+          
+    
+          if (snapshot.val().package[snapshot.val().currentQuestion - 1].answers[playersArray[0].answer].correct === true) {
+                    
+            delay(1000, ()=> {
+              answersRef.current.children[playersArray[0].answer].classList.add('correct');  
+            });
+
+            delay(4000, ()=> {
+              update(ref(database, `rooms/${room}/`), {
+                currentQuestion: snapshot.val().currentQuestion + 1,
+             })
+            })
+            
+            delay(3500, ()=> {
+                          
+            Object.keys(snapshot.val().players).map((key)=> {
+              remove(ref(database, `rooms/${room}/players/${key}/answer`))
+            });
+
+            setEnabled(true);
+            })
+
+
+  
+          }
+          else {
+            delay(1000, ()=> {
+              answersRef.current.children[playersArray[0].answer].classList.add('wrong');
+            })
+            delay(7000, ()=> {
+              setStop(true);
+            })
+            
+          }
+        }
       }
     })
   }, [room])
 
-  useEffect(()=> {
-  })
 
 
 
+  // handle clicking on answers by updating player's state in firebase room
   function handleClick(a) {
-    console.log(game.package[questionNumber - 1].answers.indexOf(a));
-    const answerIndex = game.package[questionNumber - 1].answers.indexOf(a)
+    if(enabled) {
+      const answerIndex = game.package[game.currentQuestion - 1].answers.indexOf(a);
+      update(ref(database, `rooms/${room}/players/${playerId}/`), {
+        answer: answerIndex,
+      })
+    }
 
-
-    update(ref(database, `rooms/${room}/players/${playerId}/`), {
-      answer: game.package[questionNumber - 1].answers.indexOf(a),
-    })
-    
   }
+
+
   return (
 
     <div className="gameScreen">
-
-      <div className="display">
-
-          <h3>{game && `${game.package[questionNumber - 1].question}`}</h3>
-
-          <div className="timer">
-            26
-          </div>
-      </div>
-
-      <div className="answers">
-      {game && game.package[questionNumber - 1].answers.map((a)=> 
-            <div className={className} key={a.text} onClick={()=>handleClick(a)}>
-              {a.text}
-              <div>
-                {/* {Object.keys(game.players).map((key)=> {
-                    if(game.players[key].answer === game.package[questionNumber - 1].)
-                })} */}
-              </div>
+      {stop ? <h1 className='endText'>You earned: {earned}, correct answer is {game.package[game.currentQuestion - 1].correct_answer} </h1> : (
+        <>
+            <div className="display">
+                <h3>{game ? `${game.package[game.currentQuestion - 1].question}` : 'waiting'}</h3>
+                <div className="timer">
+                  <Timer setStop={setStop} currentQuestion={game && game.currentQuestion}/>
+                </div>
             </div>
+
+            <div className="answers" ref={answersRef}>
+            {game && game.package[game.currentQuestion - 1].answers.map((a)=> 
+              <div className='answer' key={a.text} onClick={()=>handleClick(a)}>
+                  {a.text}
+                  <div className='player-votes'>
+                      {Object.keys(game.players).map(key => {
+                        if(game.players[key].answer === game.package[game.currentQuestion - 1].answers.indexOf(a)) {
+                          return (<div className='player-votes-icon' key={key}>{game.players[key].name.charAt(0).toUpperCase() + game.players[key].name.charAt(1)}</div>)
+                        }
+                      })}                
+                  </div>
+              </div>
+            )}
+            </div>
+
+
+            <div className="progression">
+            {game && moneyPyramid.map((m)=> (
+              <li key={m.id} className={game.currentQuestion === m.id ? "moneyListItem active" : "moneyListItem"}><span>{m.id}</span><span>{m.amount}</span></li>
+            ))}
+            </div>
+        </> 
       )}
-
-
-
-      </div>
-
-      <div className="progression">
-          {moneyPyramid.map((m)=> (
-            <li key={m.id} className={questionNumber === m.id ? "moneyListItem active" : "moneyListItem"}><span>{m.id}</span><span>{m.amount}</span></li>
-          ))}
-      </div>
+     
 
     </div>
   )

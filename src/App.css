@@ -1,3 +1,13 @@
+HTML {
+  cursor: pointer;
+}
+
+body {
+  cursor: default;
+  
+}
+
+
 #root {
   --main-bg-color: #312e81;
   --primary-color: #484554;
@@ -10,9 +20,10 @@
   align-items: center;
   justify-content: center;
 }
+
 .App {
-  width: 1000px;
-  height: 600px;
+  width: 90%;
+  height: 90%;
   display: grid;
   grid-template-rows: repeat(7, 1fr);;
   grid-template-columns: repeat(9, 1fr);
@@ -22,10 +33,9 @@
 }
 
 .search {
-  width: 90%;
+  width: 100%;
   height: 22px;
   border-radius: 10px;
-
 }
 
 .search:focus {
@@ -35,41 +45,44 @@
 
 .rooms {
   grid-column: 1/3;
-  grid-row: 1/7;
+  grid-row: 1/8;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   border: 1px solid white;
   border-radius: 10px;
   padding: 5px;
-
+  
 }
 
 
 .rooms ul {
+  height: 100%;
   list-style: none;
   padding: 0;
 } 
 .rooms li  {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   margin-top: 5px;
   border-bottom: 1px solid white; 
   cursor: pointer;
-  
+  padding-bottom: 3px;
+  width: 100%;
+  gap: 2px;
 
 }
 
-.createRoom {
+.changeName {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  width: 100%;
+  flex-direction: column;
   grid-column: 1/3;
   grid-row: 7/8;
-  
-  border: 1px solid white;
   border-radius: 10px;
-  padding: 5px; 
+  
 }
 
 h1 {
@@ -83,16 +96,16 @@ h1 {
   cursor: pointer;
   padding: 10px 40px;
   border-radius: 15px;
-  
 }
 
 .button-mini {
   background-color: orange;
   border: none;
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 5px 8px;
   border-radius: 15px;
-  margin-left: 15px;
+  margin-left: 5px;
+  color: white;
 }
 .create {
   background-color: green;
@@ -105,7 +118,7 @@ h1 {
   border-radius: 10px;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(7, 1fr);
   padding: 5px;
   gap: 5px;
 }
@@ -115,9 +128,11 @@ h1 {
   grid-column: 3/10;
   grid-row: 1/8;
   border: 1px solid white;
-  display: flex;
+  display: flex;  
+  justify-content: space-between;
   flex-direction: column;
   padding: 5px;
+  border-radius: 10px;
 }
 
 .display {
@@ -125,8 +140,8 @@ h1 {
   align-items: center;
   justify-content: center;
   position: relative;
-  border: 1px solid white;
-  grid-row: 1/4;
+  
+  grid-row: 1/6;
   grid-column: 1/3;
 }
 
@@ -138,27 +153,26 @@ h1 {
 
 .progression {
   border: 1px solid white;
-  grid-row: 1/5;
+  grid-row: 1/8;
   grid-column: 3/4;
   list-style: none;
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   padding: 5px;
+  border-radius: 10px;
 }
 
 .progression li {
-  font-size: 18px;
+  font-size: 20px;
   display: flex;
   justify-content: space-between;
   border-radius: 15px;
-  
-  padding: 2px 5px;
-  
+  padding: 2px 15px;
 }
 
 .active {
   background-color: orange;
-  
 }
 
 .timer {
@@ -180,7 +194,7 @@ h1 {
 }
 
 .lobby-player {
-  width: 65px;
+  width: auto;
   height: 100px;
 
   margin-right: 10px;
@@ -246,11 +260,11 @@ h1 {
 }
 
 input:checked + .slider {
-  background-color: #4f46e5;
+  background-color: orange;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #4f46e5;
+  box-shadow: 0 0 1px orange;
 }
 
 input:checked + .slider:before {
@@ -274,53 +288,155 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   border: 1px solid white;
   border-radius: 10px;
   padding: 5px;
 }
 
-.answers {
+.messages {
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  
+  margin: 0;
+  padding: 0px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  row-gap: 1px;
+}
+
+.chat-message {
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.chat-message p {
+background-color: orange;
+border-radius: 15px;
+padding: 4px 8px;
+max-width: 70%;
+word-break: break-all;
+    white-space: normal;
+}
+
+
+.chat-player {
+  width: 25px;
+  min-width: 25px;
+  height: 25px;
+  background-color: var(--main-bg-color);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   border: 1px solid white;
-  grid-row: 4/6;
+  margin-right: 5px;
+}
+
+.send-container {
+  display: flex;
+  width: 100%;
+  margin-top: 5px;
+}
+.answers {
+  
+  grid-row: 6/8;
   grid-column: 1/3;
   display: flex;
   align-items: center;
   justify-content: space-around;
   flex-wrap: wrap;
+  
 }
 
 .answer {
+  position: relative;
   width: 45%;
   height: 25%;
   font-size: 18px;
-  
+  padding:  3px;
   border: 1px solid white;
   border-radius: 15px;
-  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
+.answer:hover, .answer.active {
+  background-color: mediumblue;
+}
+
+
+.answer.correct {
+  animation: correct 3s ease forwards;
+}
+
+.answer.wrong {
+  animation: wrong 3s ease forwards;
+}
+
+@keyframes  correct {
+
+  0%, 22%, 42% {
+    background: mediumblue;
+  }
+
+  20%, 40%, 60% {
+     background: #4f46e5;
+  }
+
+  62%, 100% {
+    background: green;
+  }
+
+}
+
+@keyframes  wrong {
+
+  0%, 22%, 42% {
+    background: mediumblue;
+  }
+
+  20%, 40%, 60% {
+     background: #4f46e5;
+  }
+
+  62%, 100% {
+    background: crimson;
+  }
+
+}
+
+
+.player-votes {
+  display: flex;
+ 
+  position: absolute;
+  width: 100%;
+  bottom: -10px;
+  gap: 3px;
+}
+
+.player-votes-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  list-style: none;
+  background-color: orange;
   display: flex;
   align-items: center;
-  justify-content: start; 
+  justify-content: center;
+  font-size: 10px;
 }
 
-.answer p {
-  margin-left: 10px;
-}
-
-.answer-top {
-  width: 100%;
-  height: 66%;
-  display: flex;
-  align-items: end;
-  justify-content: start;
-  padding-left: 15px;
-}
-.answer-bot {
-  background-color: red;
-  width: 100%;
-  height: 33%;
-  z-index: -10;
-}
 
 .wrong {
   background-color: red;
@@ -329,3 +445,53 @@ input:checked + .slider:before {
 .correct {
   background-color: green;
 }
+
+.endText {
+  grid-row: 1/6;
+  grid-column: 1/4;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+
+.changeNameInput {
+  width: 100%;
+  display: flex;
+}
+
+
+.pre-lobby {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: orange; 
+  border-radius: 10px;
+  cursor: pointer !important;
+}
+
+/* Handle on hover
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+} */
