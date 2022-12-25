@@ -79,7 +79,7 @@ function App() {
 
 
   return (
-    <main className="App container flex justify-center items-center bg-zinc-900  rounded-[10px] min-w-[450px] min-h-[600px] max-w-[1920px] max-h-[1080px] ">
+    <main className="App container flex justify-center items-center bg-zinc-900  rounded-[10px] min-w-[400px] min-h-[539px] max-w-[1920px] max-h-[1080px] ">
         {(!login) && <Login setLogin={setLogin} playerId={playerIdState} name={name} setName={setName}/>}
         {(login && !room && !gameOn) && <HomeScreen playerId={playerIdState} name={name} />}
         {(login && room && !gameOn) && <LobbyScreen playerId={playerIdState} room={room} name={name}/>}

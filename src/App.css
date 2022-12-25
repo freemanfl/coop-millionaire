@@ -139,7 +139,7 @@ input:checked + .slider:before {
 @keyframes  correct {
 
   0%, 22%, 42% {
-    background: #786BAD;
+    background: orange;
   }
 
   20%, 40%, 60% {
@@ -155,7 +155,7 @@ input:checked + .slider:before {
 @keyframes  wrong {
 
   0%, 22%, 42% {
-    background: #786BAD;
+    background: orange;
   }
 
   20%, 40%, 60% {

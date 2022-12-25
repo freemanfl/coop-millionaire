@@ -35,7 +35,6 @@ const HomeScreen = ({playerId, name}) => {
 
 
   const handleClick = (e) => {
-    console.log('click handler');
     createLobby();
     fetchQuestions();
   }

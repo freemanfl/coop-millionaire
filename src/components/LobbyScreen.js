@@ -56,7 +56,6 @@ const LobbyScreen = ({playerId, room, name}) => {
                 }
 
                 if(snapshot.val().package != undefined) {
-                    console.log(snapshot.val().package);
                     setQuestions(snapshot.val().package); 
                 }
 

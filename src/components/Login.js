@@ -14,7 +14,7 @@ const Login = ({setLogin, playerId, name, setName}) => {
   const handleClick = ()=> {
 
       if(nameRef.current.value !== '') {
-        console.log(playerId);
+     
 
         setLogin(true);
 
