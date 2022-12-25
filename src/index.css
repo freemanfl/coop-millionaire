@@ -1,13 +1,9 @@
 body {
-<<<<<<< HEAD
-  margin: 0;
-=======
   padding: 0 auto;
   margin: 0 auto;
   box-sizing: border-box;
 
 
->>>>>>> master
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -19,8 +15,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-<<<<<<< HEAD
-=======
 
 
 #root {
@@ -33,4 +27,3 @@ code {
   max-height: 1080;
  
 }
->>>>>>> master
