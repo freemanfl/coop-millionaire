@@ -140,7 +140,7 @@ const GameScreen = ({room, playerId, name}) => {
                             md:flex-row md:flex-wrap md:space-y-0 md:h-3/6 " 
                   ref={answersRef}>
                 {game && game.package[game.currentQuestion - 1].answers.map((a)=> 
-                  <div className='answer text-lg container relative md:w-[48%] md:h-2/6' key={a.text} onClick={()=>handleClick(a)}>
+                  <div className='answer text-lg container relative md:w-[48%] md:h-2/6 md:text-2xl' key={a.text} onClick={()=>handleClick(a)}>
                       {a.text}
                       <div className='player-votes absolute w-full flex items-center h-1/4 bottom-0 space-x-1 pb-1 pl-2 
                                       md:'>
