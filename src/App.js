@@ -13,7 +13,25 @@ import GameScreen from './components/GameScreen';
 let playerId;
 
 function App() {
+  // define a function that sets min-height of my-element to window.innerHeight:
 
+    const setHeight = () => {
+      document.getElementById("app").style.minHeight = window.innerHeight + "px"
+    };
+
+    // define mobile screen size:
+
+    let deviceWidth = window.matchMedia("(max-width: 1024px)");
+
+    if (deviceWidth.matches) {
+    // set an event listener that detects when innerHeight changes:
+
+      window.addEventListener("resize", setHeight);
+
+    // call the function once to set initial height:
+
+      setHeight();
+    }
 
   const [playerIdState, setPlayerIdState] = useState();
   const [room, setRoom] = useState(false);
@@ -81,7 +99,7 @@ function App() {
 
 
   return (
-    <main className="App container flex justify-center items-center bg-zinc-900  min-w-[350px] min-h-[539px] max-w-[1920px] max-h-[1080px] ">
+    <main id='app' className="App container flex justify-center items-center bg-zinc-900  min-w-[350px] min-h-[539px] max-w-[1920px] max-h-[1080px] ">
         {(!login) && <Login setLogin={setLogin} playerId={playerIdState} name={name} setName={setName}/>}
         {(login && !room && !gameOn) && <HomeScreen playerId={playerIdState} name={name} />}
         {(login && room && !gameOn) && <LobbyScreen playerId={playerIdState} room={room} name={name}/>}
