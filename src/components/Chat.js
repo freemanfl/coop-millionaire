@@ -1,5 +1,6 @@
 import {useEffect, useState, useRef} from 'react'
 import { database} from "../firebase.js"
+<<<<<<< HEAD
 import { ref, onValue, set, update, push } from "firebase/database";
 import {useList} from 'react-firebase-hooks/database';
 import Message from './Message.js';
@@ -22,12 +23,39 @@ const Chat = ({room, playerId}) => {
       const messageData = {
         author: playerId,
         body: messageInputRef.current.value,
+=======
+import { ref,  set, push } from "firebase/database";
+
+import {useList} from 'react-firebase-hooks/database';
+import Message from './Message.js';
+
+const Chat = ({room, name, playerId}) => {
+
+  let messagesRef = ref(database, `chats/${room}`)
+  const [messages, loading, error] = useList(messagesRef);
+  const inputRef = useRef(null);
+  const messagesEndRef = useRef(null);
+  
+
+  let newMessageKey = push(messagesRef).key;
+
+
+  const sendMessage = () => {
+    if(inputRef.current.value !== '') {
+      const messageData = {
+        author: playerId,
+        body: inputRef.current.value,
+>>>>>>> master
         name: name,
       }
 
       set(ref(database, 'chats/' + room + '/' + newMessageKey), messageData);
 
+<<<<<<< HEAD
       messageInputRef.current.value = '';
+=======
+      inputRef.current.value = '';
+>>>>>>> master
 
     }
 
@@ -39,6 +67,7 @@ const Chat = ({room, playerId}) => {
       sendMessage();
    }
 
+<<<<<<< HEAD
   // 3. Listen to the name for the form
   useEffect(()=> {
     onValue(ref(database, `players/${playerId}/name`), snapshot => {
@@ -50,6 +79,9 @@ const Chat = ({room, playerId}) => {
 
   // 4. A function to scroll to the last div in chat
   const scrollToBottom = () => {
+=======
+   const scrollToBottom = () => {
+>>>>>>> master
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
@@ -59,6 +91,7 @@ const Chat = ({room, playerId}) => {
     scrollToBottom();
   }, [messages]);
 
+<<<<<<< HEAD
 
   return (
     <div className='chat'>
@@ -74,6 +107,30 @@ const Chat = ({room, playerId}) => {
                 <button type='submit' className='button-mini' style={{color: 'white'}}>&#x27A4;</button>
           </form>
     </div>
+=======
+  return (
+    <div className='chat container h-[100%] overflow-hidden space-y-2
+                    border-none'>
+                <div className="container messages justify-start items-start space-y-2 p-2">
+                    {error && <strong>Error: {error}</strong>}
+                    {loading && <span>List: Loading...</span>}
+                    {(!loading && messages) && messages.map(msg => <Message key={msg.key} message={msg} playerId={playerId} />)}
+                    <div ref={messagesEndRef} />
+                </div>
+                <form onSubmit={handleSubmit} className="lobby-input container p-0 flex-row h-auto border-none">
+                    <input ref={inputRef} type="text" maxLength='120' className='w-full  h-12 bg-transparent px-2 self-end
+                        border-4 border-brdr
+                        focus:outline-none'/>
+
+                    <button  type='submit' className='w-32 h-12 border-4 border-brdr border-l-0 text-black bg-white'>&#x27A4;</button> 
+
+                </form>
+
+                    
+     
+    </div>
+    
+>>>>>>> master
   )
 }
 

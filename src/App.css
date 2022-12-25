@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 HTML {
   cursor: pointer;
 }
@@ -216,10 +217,50 @@ body {
   border: 1px solid white;
 }
 
+=======
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+    overflow-x: hidden;    
+}
+
+.App {
+    color: white;
+}
+.container {
+    padding: 5px;
+    border: 4px solid  #786BAD;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+}
+
+.messages {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    overflow-y: scroll !important;
+  }
+
+
+
+/* Styles for ready toggle */
+>>>>>>> master
 .ready {
     position: absolute;
     right: 20px;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 .switch {
   position: relative;
   display: inline-block;
@@ -260,11 +301,19 @@ body {
 }
 
 input:checked + .slider {
+<<<<<<< HEAD
   background-color: orange;
 }
 
 input:focus + .slider {
   box-shadow: 0 0 1px orange;
+=======
+  background-color: #786BAD;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #786BAD;
+>>>>>>> master
 }
 
 input:checked + .slider:before {
@@ -282,6 +331,7 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+<<<<<<< HEAD
 .chat {
   grid-column: 1/3;
   grid-row: 1/8;
@@ -377,6 +427,35 @@ word-break: break-all;
 
 .answer:hover, .answer.active {
   background-color: mediumblue;
+=======
+
+/* scrollbar styles */
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #786BAD; 
+  border-radius: 10px;
+  cursor: pointer !important;
+}
+
+
+
+.answer:hover, .answer.active {
+  /* background-color: #786BAD; */
+  background-color: orange;
+  
+>>>>>>> master
 }
 
 
@@ -391,11 +470,19 @@ word-break: break-all;
 @keyframes  correct {
 
   0%, 22%, 42% {
+<<<<<<< HEAD
     background: mediumblue;
   }
 
   20%, 40%, 60% {
      background: #4f46e5;
+=======
+    background: #786BAD;
+  }
+
+  20%, 40%, 60% {
+     background: #18181b;
+>>>>>>> master
   }
 
   62%, 100% {
@@ -407,11 +494,19 @@ word-break: break-all;
 @keyframes  wrong {
 
   0%, 22%, 42% {
+<<<<<<< HEAD
     background: mediumblue;
   }
 
   20%, 40%, 60% {
      background: #4f46e5;
+=======
+    background: #786BAD;
+  }
+
+  20%, 40%, 60% {
+     background: #18181b;
+>>>>>>> master
   }
 
   62%, 100% {
@@ -421,6 +516,7 @@ word-break: break-all;
 }
 
 
+<<<<<<< HEAD
 .player-votes {
   display: flex;
  
@@ -443,12 +539,15 @@ word-break: break-all;
 }
 
 
+=======
+>>>>>>> master
 .wrong {
   background-color: red;
 }
 
 .correct {
   background-color: green;
+<<<<<<< HEAD
 }
 
 .endText {
@@ -500,3 +599,6 @@ word-break: break-all;
 ::-webkit-scrollbar-thumb:hover {
   background: #b30000; 
 } */
+=======
+}
+>>>>>>> master

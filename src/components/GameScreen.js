@@ -3,9 +3,10 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import { database} from "../firebase.js";
 import { update, ref, onValue, remove } from "firebase/database";
 import Timer from './Timer';
+import Chat from './Chat';
 
 
-const GameScreen = ({room, playerId}) => {
+const GameScreen = ({room, playerId, name}) => {
 
   const moneyPyramid = useMemo(
     () =>
@@ -117,36 +118,49 @@ const GameScreen = ({room, playerId}) => {
 
   }
 
+  const refreshPage = ()=>{
+    window.location.reload();
+ }
 
   return (
 
-    <div className="gameScreen">
-      {stop ? <h1 className='endText'>You earned: {earned}, correct answer is {game.package[game.currentQuestion - 1].correct_answer} </h1> : (
+    <div className="gameScreen container text-center border-none">
+      {stop ? <div className='h-full flex flex-col justify-between items-center'><div></div><h1 className='text-2xl'>You earned: {earned}, correct answer is {game.package[game.currentQuestion - 1].correct_answer}. </h1>  <button onClick={refreshPage} className='w-2/3 p-4 text-2xl border-4 border-brdr text-black bg-white mt-'>Play Again</button> </div> : (
         <>
-            <div className="display">
-                <h3>{game ? `${game.package[game.currentQuestion - 1].question}` : 'waiting'}</h3>
-                <div className="timer">
+            <div className="display container h-3/6 border-none px-2 text-center space-y-6 ">
+                <h3 className='w-4/6 text-3xl'>{(game && game.package != undefined) ? `${game.package[game.currentQuestion - 1].question}` : 'waiting'}</h3>
+                <div className="timer w-16 h-16 flex items-center justify-center  border-4 border-brdr rounded-full">
                   <Timer setStop={setStop} currentQuestion={game && game.currentQuestion}/>
                 </div>
             </div>
+            
+            <Chat room={room} name={name} playerId={playerId}/>  
 
-            <div className="answers" ref={answersRef}>
-            {game && game.package[game.currentQuestion - 1].answers.map((a)=> 
-              <div className='answer' key={a.text} onClick={()=>handleClick(a)}>
-                  {a.text}
-                  <div className='player-votes'>
-                      {Object.keys(game.players).map(key => {
-                        if(game.players[key].answer === game.package[game.currentQuestion - 1].answers.indexOf(a)) {
-                          return (<div className='player-votes-icon' key={key}>{game.players[key].name.charAt(0).toUpperCase() + game.players[key].name.charAt(1)}</div>)
-                        }
-                      })}                
+            <div className="answers container h-2/6 justify-between border-none space-y-2
+                            md:flex-row md:flex-wrap md:space-y-0 md:h-3/6 " 
+                  ref={answersRef}>
+                {game && game.package[game.currentQuestion - 1].answers.map((a)=> 
+                  <div className='answer text-lg container relative md:w-[48%] md:h-2/6 md:text-2xl' key={a.text} onClick={()=>handleClick(a)}>
+                      {a.text}
+                      <div className='player-votes absolute w-full flex items-center h-1/4 bottom-0 space-x-1 pb-1 pl-2 
+                                      md:'>
+                          {Object.keys(game.players).map(key => {
+                            if(game.players[key].answer === game.package[game.currentQuestion - 1].answers.indexOf(a)) {
+
+                              // design of a vote icon
+                              return (<div className='voteIcon z-10 font-semibold bg-white text-black border-4 p-1 text-xs border- flex items-center justify-center left-0
+                                                       w-6 h-6 rounded-full
+                                                                                  ' 
+                                        key={key}>{game.players[key].name.charAt(0).toUpperCase() + game.players[key].name.charAt(1)}</div>)
+                            }
+                          })}                
+                      </div>
                   </div>
-              </div>
-            )}
+                )}
             </div>
 
 
-            <div className="progression">
+            <div className="progression hidden">
             {game && moneyPyramid.map((m)=> (
               <li key={m.id} className={game.currentQuestion === m.id ? "moneyListItem active" : "moneyListItem"}><span>{m.id}</span><span>{m.amount}</span></li>
             ))}
