@@ -20,11 +20,13 @@ code {
 #root {
   display: flex;
   align-items: center; 
+
+
   justify-content: center;
   width: 100vw;
-  height:100vh;
+  height: 100vh; /* fallback for Js load */
+  
   
   box-sizing: border-box;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow: hidden; 
 }
