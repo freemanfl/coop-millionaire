@@ -127,16 +127,16 @@ const GameScreen = ({room, playerId, name}) => {
     <div className="gameScreen container space-y-2 text-center border-none">
       {stop ? <div className='h-full flex flex-col justify-between items-center'><div></div><h1 className='text-2xl'>You earned: {earned}, correct answer is {game.package[game.currentQuestion - 1].correct_answer}. </h1>  <button onClick={refreshPage} className='w-2/3 p-4 text-2xl border-4 border-brdr text-black bg-white mt-'>Play Again</button> </div> : (
         <>
-            <div className="display container h-3/6 min-h-3/6 border-none px-2 text-center space-y-6 ">
-                <h3 className='w-4/6 text-2xl'>{(game && game.package != undefined) ? `${game.package[game.currentQuestion - 1].question}` : 'waiting'}</h3>
-                <div className="timer w-16 h-16 flex items-center justify-center  border-4 border-brdr rounded-full">
+            <div className="container border-none px-2 justify-around">
+                <h3 className='text-2xl'>{(game && game.package != undefined) ? `${game.package[game.currentQuestion - 1].question}` : 'waiting'}</h3>
+                <div className="timer  bottom-1 w-16 h-16 flex items-center justify-center border-4 border-brdr rounded-full">
                   <Timer setStop={setStop} currentQuestion={game && game.currentQuestion}/>
                 </div>
             </div>
             
             <Chat room={room} name={name} playerId={playerId}/>  
 
-            <div className="answers container h-2/6 justify-between border-none space-y-2
+            <div className="answers container justify-between border-none space-y-2
                             md:flex-row md:flex-wrap md:space-y-0 md:h-3/6 " 
                   ref={answersRef}>
                 {game && game.package[game.currentQuestion - 1].answers.map((a)=> 
