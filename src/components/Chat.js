@@ -49,7 +49,7 @@ const Chat = ({room, name, playerId}) => {
   }, [messages]);
 
   return (
-    <div className='chat container h-[100%] overflow-hidden space-y-2
+    <div className='chat container overflow-hidden space-y-2
                     border-none'>
                 <div className="container messages justify-start items-start space-y-2 p-2">
                     {error && <strong>Error: {error}</strong>}
