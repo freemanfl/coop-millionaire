@@ -127,9 +127,9 @@ const GameScreen = ({room, playerId, name}) => {
     <div className="gameScreen container space-y-2 text-center border-none">
       {stop ? <div className='h-full flex flex-col justify-between items-center'><div></div><h1 className='text-2xl'>You earned: {earned}, correct answer is {game.package[game.currentQuestion - 1].correct_answer}. </h1>  <button onClick={refreshPage} className='w-2/3 p-4 text-2xl border-4 border-brdr text-black bg-white mt-'>Play Again</button> </div> : (
         <>
-            <div className="container border-none px-2 justify-around">
+            <div className="display container relative border-none px-2 ">
                 <h3 className='text-2xl'>{(game && game.package != undefined) ? `${game.package[game.currentQuestion - 1].question}` : 'waiting'}</h3>
-                <div className="timer  bottom-1 w-16 h-16 flex items-center justify-center border-4 border-brdr rounded-full">
+                <div className="timer absolute bottom-1 w-16 h-16 flex items-center justify-center border-4 border-brdr rounded-full">
                   <Timer setStop={setStop} currentQuestion={game && game.currentQuestion}/>
                 </div>
             </div>
