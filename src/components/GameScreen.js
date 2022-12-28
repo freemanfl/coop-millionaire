@@ -129,7 +129,7 @@ const GameScreen = ({room, playerId, name}) => {
         <>
             <div className="display container relative border-none px-2 ">
                 <h3 className='text-2xl'>{(game && game.package != undefined) ? `${game.package[game.currentQuestion - 1].question}` : 'waiting'}</h3>
-                <div className="timer absolute text-md bottom-1 right-1 w-10 h-10 flex items-center justify-center border-4 border-brdr rounded-full">
+                <div className="timer absolute text-md bottom-1 right-1 w-10 h-10 p-6 flex items-center justify-center border-4 border-brdr rounded-full">
                   <Timer setStop={setStop} currentQuestion={game && game.currentQuestion}/>
                 </div>
             </div>
