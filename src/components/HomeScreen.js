@@ -35,7 +35,6 @@ const HomeScreen = ({playerId, name}) => {
 
 
   const handleClick = (e) => {
-    console.log('click handler');
     createLobby();
     fetchQuestions();
   }
@@ -119,7 +118,7 @@ const HomeScreen = ({playerId, name}) => {
   return (
     <div className='homescreen container border-none space-y-4'>
             <h1 className='text-3xl'>Active Lobbies</h1>
-            <ul className='container border-4 border-brdr justify-start border-none'>
+            <ul className='container justify-start border-none space-y-2'>
                     {error && <strong>Error: {error}</strong>}
                     {loading && <span>List: Loading...</span>}
                     {(!loading && rooms) && (

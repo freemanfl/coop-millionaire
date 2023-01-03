@@ -56,7 +56,6 @@ const LobbyScreen = ({playerId, room, name}) => {
                 }
 
                 if(snapshot.val().package != undefined) {
-                    console.log(snapshot.val().package);
                     setQuestions(snapshot.val().package); 
                 }
 
@@ -70,7 +69,7 @@ const LobbyScreen = ({playerId, room, name}) => {
   
   return (
     <div className='lobbyScreen container justify-between border-none space-y-2'>
-        <ul className="container relative lobby-players justify-start h-auto flex-row flex-wrap space-x-4">
+        <ul className="container relative lobby-players justify-start h-auto flex-row flex-wrap space-x-0 py-2">
                 {players?.map(player=> 
                     <li key={player.key} className='flex flex-col w-24 items-center justify-center'>
                         <div className="h-16 w-16 rounded-full border-4 border-brdr flex items-center justify-center ">{player.val().name.charAt(0).toUpperCase() + player.val().name.charAt(1)}</div>

@@ -124,19 +124,19 @@ const GameScreen = ({room, playerId, name}) => {
 
   return (
 
-    <div className="gameScreen container text-center border-none">
+    <div className="gameScreen container space-y-2 text-center border-none">
       {stop ? <div className='h-full flex flex-col justify-between items-center'><div></div><h1 className='text-2xl'>You earned: {earned}, correct answer is {game.package[game.currentQuestion - 1].correct_answer}. </h1>  <button onClick={refreshPage} className='w-2/3 p-4 text-2xl border-4 border-brdr text-black bg-white mt-'>Play Again</button> </div> : (
         <>
-            <div className="display container h-3/6 border-none px-2 text-center space-y-6 ">
-                <h3 className='w-4/6 text-3xl'>{(game && game.package != undefined) ? `${game.package[game.currentQuestion - 1].question}` : 'waiting'}</h3>
-                <div className="timer w-16 h-16 flex items-center justify-center  border-4 border-brdr rounded-full">
+            <div className="display container relative border-none px-4 ">
+                <h3 className='text-2xl'>{(game && game.package != undefined) ? `${game.package[game.currentQuestion - 1].question}` : 'waiting'}</h3>
+                <div className="timer absolute text-md bottom-1 right-1 w-12 h-12 p-6 flex items-center justify-center border-4 border-brdr rounded-full">
                   <Timer setStop={setStop} currentQuestion={game && game.currentQuestion}/>
                 </div>
             </div>
             
             <Chat room={room} name={name} playerId={playerId}/>  
 
-            <div className="answers container h-2/6 justify-between border-none space-y-2
+            <div className="answers container justify-between border-none space-y-2
                             md:flex-row md:flex-wrap md:space-y-0 md:h-3/6 " 
                   ref={answersRef}>
                 {game && game.package[game.currentQuestion - 1].answers.map((a)=> 
@@ -148,7 +148,7 @@ const GameScreen = ({room, playerId, name}) => {
                             if(game.players[key].answer === game.package[game.currentQuestion - 1].answers.indexOf(a)) {
 
                               // design of a vote icon
-                              return (<div className='voteIcon z-10 font-semibold bg-white text-black border-4 p-1 text-xs border- flex items-center justify-center left-0
+                              return (<div className='voteIcon z-10 font-semibold bg-white text-black p-1 text-xs border- flex items-center justify-center left-0
                                                        w-6 h-6 rounded-full
                                                                                   ' 
                                         key={key}>{game.players[key].name.charAt(0).toUpperCase() + game.players[key].name.charAt(1)}</div>)
