@@ -1,13 +1,27 @@
-import '../App.css';
-import { useEffect, useRef, useState, useMemo } from 'react';
-import { database} from "../firebase.js";
+import "../App.css";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { database } from "../firebase.js";
 import { update, ref, onValue, remove } from "firebase/database";
-import Timer from './Timer';
-import Chat from './Chat';
+import Timer from "./Timer";
+import Chat from "./Chat";
 
+//
+///
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-const GameScreen = ({room, playerId, name}) => {
-
+const GameScreen = ({ room, playerId, name }) => {
   const moneyPyramid = useMemo(
     () =>
       [
@@ -30,7 +44,7 @@ const GameScreen = ({room, playerId, name}) => {
     []
   );
   const [game, setGame] = useState(null);
-  
+
   const [consensus, setConsensus] = useState(false);
   const [earned, setEarned] = useState("$ 0");
   const [stop, setStop] = useState(null);
@@ -38,139 +52,192 @@ const GameScreen = ({room, playerId, name}) => {
   const [enabled, setEnabled] = useState(true);
 
   const delay = (duration, callback) => {
-      setTimeout(()=> {
-        callback();
-      }, duration)
-  }
+    setTimeout(() => {
+      callback();
+    }, duration);
+  };
 
+  useEffect(() => {
+    game &&
+      game.currentQuestion > 1 &&
+      setEarned(
+        moneyPyramid.find((m) => m.id === game.currentQuestion - 1).amount
+      );
+  }, [game, moneyPyramid]);
 
-  useEffect(()=> {
-    game && game.currentQuestion > 1 && setEarned(moneyPyramid.find(m=> m.id === game.currentQuestion - 1).amount)
-  }, [game, moneyPyramid])
-
-
-  useEffect(()=> {
+  useEffect(() => {
     //listen for the room info
-    onValue(ref(database, `rooms/${room}`), snapshot => {
-      if(snapshot.val()) { 
+    onValue(ref(database, `rooms/${room}`), (snapshot) => {
+      if (snapshot.val()) {
         setGame(snapshot.val());
 
         //data will be an array of players
         const playersArray = [];
-        Object.keys(snapshot.val().players).map((key)=> {
+        Object.keys(snapshot.val().players).map((key) => {
           playersArray.push(snapshot.val().players[key]);
-        })
+        });
 
         //we have a consensus if all players answered like first player
-        if ( typeof playersArray[0].answer !== "undefined"  && playersArray.every(player => player.answer === playersArray[0].answer)) {
+        if (
+          typeof playersArray[0].answer !== "undefined" &&
+          playersArray.every(
+            (player) => player.answer === playersArray[0].answer
+          )
+        ) {
           setConsensus(true);
           setEnabled(false);
 
-          if (snapshot.val().package[snapshot.val().currentQuestion - 1].answers[playersArray[0].answer].correct === true) {
-                    
-            delay(1000, ()=> {
-              answersRef.current.children[playersArray[0].answer].classList.add('correct');  
+          if (
+            snapshot.val().package[snapshot.val().currentQuestion - 1].answers[
+              playersArray[0].answer
+            ].correct === true
+          ) {
+            delay(1000, () => {
+              answersRef.current.children[playersArray[0].answer].classList.add(
+                "correct"
+              );
             });
 
-            delay(4000, ()=> {
+            delay(4000, () => {
               update(ref(database, `rooms/${room}/`), {
                 currentQuestion: snapshot.val().currentQuestion + 1,
-             })
-            })
-            
-            delay(3500, ()=> {
-                          
-            Object.keys(snapshot.val().players).map((key)=> {
-              remove(ref(database, `rooms/${room}/players/${key}/answer`))
+              });
             });
 
-            setEnabled(true);
-            })
+            delay(3500, () => {
+              Object.keys(snapshot.val().players).map((key) => {
+                remove(ref(database, `rooms/${room}/players/${key}/answer`));
+              });
 
-
-  
-          }
-          else {
-            delay(1000, ()=> {
-              answersRef.current.children[playersArray[0].answer].classList.add('wrong');
-            })
-            delay(7000, ()=> {
+              setEnabled(true);
+            });
+          } else {
+            delay(1000, () => {
+              answersRef.current.children[playersArray[0].answer].classList.add(
+                "wrong"
+              );
+            });
+            delay(7000, () => {
               setStop(true);
-            })
-            
+            });
           }
         }
       }
-    })
-  }, [room])
-
-
-
+    });
+  }, [room]);
 
   // handle clicking on answers by updating player's state in firebase room
   function handleClick(a) {
-    if(enabled) {
-      const answerIndex = game.package[game.currentQuestion - 1].answers.indexOf(a);
+    if (enabled) {
+      const answerIndex =
+        game.package[game.currentQuestion - 1].answers.indexOf(a);
       update(ref(database, `rooms/${room}/players/${playerId}/`), {
         answer: answerIndex,
-      })
+      });
     }
-
   }
 
-  const refreshPage = ()=>{
+  const refreshPage = () => {
     window.location.reload();
- }
+  };
 
   return (
-
     <div className="gameScreen container space-y-2 text-center border-none">
-      {stop ? <div className='h-full flex flex-col justify-between items-center'><div></div><h1 className='text-2xl'>You earned: {earned}, correct answer is {game.package[game.currentQuestion - 1].correct_answer}. </h1>  <button onClick={refreshPage} className='w-2/3 p-4 text-2xl border-4 border-brdr text-black bg-white mt-'>Play Again</button> </div> : (
+      {stop ? (
+        <div className="h-full flex flex-col justify-between items-center">
+          <div></div>
+          <h1 className="text-2xl">
+            You earned: {earned}, correct answer is{" "}
+            {game.package[game.currentQuestion - 1].correct_answer}.{" "}
+          </h1>{" "}
+          <button
+            onClick={refreshPage}
+            className="w-2/3 p-4 text-2xl border-4 border-brdr text-black bg-white mt-"
+          >
+            Play Again
+          </button>{" "}
+        </div>
+      ) : (
         <>
-            <div className="display container relative border-none px-4 ">
-                <h3 className='text-2xl'>{(game && game.package != undefined) ? `${game.package[game.currentQuestion - 1].question}` : 'waiting'}</h3>
-                <div className="timer absolute text-md bottom-1 right-1 w-12 h-12 p-6 flex items-center justify-center border-4 border-brdr rounded-full">
-                  <Timer setStop={setStop} currentQuestion={game && game.currentQuestion}/>
-                </div>
+          <div className="display container relative border-none px-4 ">
+            <h3 className="text-2xl">
+              {game && game.package != undefined
+                ? `${game.package[game.currentQuestion - 1].question}`
+                : "waiting"}
+            </h3>
+            <div className="timer absolute text-md bottom-1 right-1 w-12 h-12 p-6 flex items-center justify-center border-4 border-brdr rounded-full">
+              <Timer
+                setStop={setStop}
+                currentQuestion={game && game.currentQuestion}
+              />
             </div>
-            
-            <Chat room={room} name={name} playerId={playerId}/>  
+          </div>
 
-            <div className="answers container justify-between border-none space-y-2
-                            md:flex-row md:flex-wrap md:space-y-0 md:h-3/6 " 
-                  ref={answersRef}>
-                {game && game.package[game.currentQuestion - 1].answers.map((a)=> 
-                  <div className='answer text-lg container relative md:w-[48%] md:h-2/6 md:text-2xl' key={a.text} onClick={()=>handleClick(a)}>
-                      {a.text}
-                      <div className='player-votes absolute w-full flex items-center h-1/4 bottom-0 space-x-1 pb-1 pl-2 
-                                      md:'>
-                          {Object.keys(game.players).map(key => {
-                            if(game.players[key].answer === game.package[game.currentQuestion - 1].answers.indexOf(a)) {
+          <Chat room={room} name={name} playerId={playerId} />
 
-                              // design of a vote icon
-                              return (<div className='voteIcon z-10 font-semibold bg-white text-black p-1 text-xs border- flex items-center justify-center left-0
+          <div
+            className="answers container justify-between border-none space-y-2
+                            md:flex-row md:flex-wrap md:space-y-0 md:h-3/6 "
+            ref={answersRef}
+          >
+            {game &&
+              game.package[game.currentQuestion - 1].answers.map((a) => (
+                <div
+                  className="answer text-lg container relative md:w-[48%] md:h-2/6 md:text-2xl"
+                  key={a.text}
+                  onClick={() => handleClick(a)}
+                >
+                  {a.text}
+                  <div
+                    className="player-votes absolute w-full flex items-center h-1/4 bottom-0 space-x-1 pb-1 pl-2 
+                                      md:"
+                  >
+                    {Object.keys(game.players).map((key) => {
+                      if (
+                        game.players[key].answer ===
+                        game.package[game.currentQuestion - 1].answers.indexOf(
+                          a
+                        )
+                      ) {
+                        // design of a vote icon
+                        return (
+                          <div
+                            className="voteIcon z-10 font-semibold bg-white text-black p-1 text-xs border- flex items-center justify-center left-0
                                                        w-6 h-6 rounded-full
-                                                                                  ' 
-                                        key={key}>{game.players[key].name.charAt(0).toUpperCase() + game.players[key].name.charAt(1)}</div>)
-                            }
-                          })}                
-                      </div>
+                                                                                  "
+                            key={key}
+                          >
+                            {game.players[key].name.charAt(0).toUpperCase() +
+                              game.players[key].name.charAt(1)}
+                          </div>
+                        );
+                      }
+                    })}
                   </div>
-                )}
-            </div>
+                </div>
+              ))}
+          </div>
 
-
-            <div className="progression hidden">
-            {game && moneyPyramid.map((m)=> (
-              <li key={m.id} className={game.currentQuestion === m.id ? "moneyListItem active" : "moneyListItem"}><span>{m.id}</span><span>{m.amount}</span></li>
-            ))}
-            </div>
-        </> 
+          <div className="progression hidden">
+            {game &&
+              moneyPyramid.map((m) => (
+                <li
+                  key={m.id}
+                  className={
+                    game.currentQuestion === m.id
+                      ? "moneyListItem active"
+                      : "moneyListItem"
+                  }
+                >
+                  <span>{m.id}</span>
+                  <span>{m.amount}</span>
+                </li>
+              ))}
+          </div>
+        </>
       )}
-     
-
     </div>
-  )
-}
+  );
+};
 
-export default GameScreen
+export default GameScreen;
