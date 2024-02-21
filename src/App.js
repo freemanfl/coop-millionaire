@@ -52,13 +52,13 @@ function App() {
         setPlayerId(user.uid);
 
         // set needed refs
-        let playerRef = ref(database, `players/${playerId}`);
-        let playersRoomRef = ref(database, `rooms/${playerId}`);
-        let playersChatRef = ref(database, `chats/${playerId}`);
+        let playerRef = ref(database, `players/${user.uid}`);
+        let playersRoomRef = ref(database, `rooms/${user.uid}`);
+        let playersChatRef = ref(database, `chats/${user.uid}`);
 
         // set inital player state in database
         set(playerRef, {
-          id: playerId,
+          id: user.uid,
           name: "Anonymous",
         });
 
