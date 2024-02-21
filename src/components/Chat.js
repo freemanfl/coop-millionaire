@@ -62,7 +62,7 @@ const Chat = ({room, name, playerId}) => {
                         border-4 border-brdr
                         focus:outline-none'/>
 
-                    <button  type='submit' className='w-32 h-12 border-4 border-brdr border-l-0 text-black bg-white'>&#x27A4;</button> 
+                    <button  type='submit' className='w-32 h-12 border border-brdr border-l-0 text-black bg-white'>&#x27A4;</button> 
 
                 </form>
 
