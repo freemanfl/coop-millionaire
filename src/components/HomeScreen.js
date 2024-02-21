@@ -125,7 +125,7 @@ const HomeScreen = ({playerId, name}) => {
                         rooms.map(room=> <li className='bg-brdr w-full h-10 pl-2 flex items-center justify-between' data-id={room.val().authorId} key={room.val().authorId}>{room.val().authorName}'s room {room.val().maxPlayers > ObjectLength(room.val().players) ? <button onClick={handleClickJoin} className='w-32 h-full  text-black bg-white'>Join Lobby</button> : null}</li>)
                     )}
             </ul>
-            <button onClick={handleClick} className='w-2/3 p-4 text-2xl border-4 border-brdr text-black bg-white'>Create Lobby</button> 
+            <button onClick={handleClick} className='w-2/3 p-4 text-2xl  text-black bg-white'>Create Lobby</button> 
             
     </div>
 
