@@ -183,7 +183,7 @@ const GameScreen = ({ room, playerId, name }) => {
             {game &&
               game.package[game.currentQuestion - 1].answers.map((a) => (
                 <div
-                  className="answer text-lg container relative md:w-[48%] md:h-2/6 md:text-2xl"
+                  className="answer text-lg container border border-brdr relative md:w-[48%] md:h-2/6 md:text-2xl"
                   key={a.text}
                   onClick={() => handleClick(a)}
                 >
