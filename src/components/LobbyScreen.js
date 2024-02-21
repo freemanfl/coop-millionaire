@@ -22,7 +22,7 @@ const LobbyScreen = ({playerId, room, name}) => {
 
 
   const toggleReady = ()=> {
-    if(readyButton.current.checked ) {
+    if(readyButton.current.checked || questions) {
         update(ref(database, `rooms/${room}/players/${playerId}`), {
             ready: true,
         });
