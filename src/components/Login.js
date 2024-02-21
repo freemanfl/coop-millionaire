@@ -31,12 +31,12 @@ const Login = ({setLogin, playerId, name, setName}) => {
         <h1 className='text-3xl'>Hello, {name}</h1>
         
         <input type="text" maxLength='12' className='w-2/3 text-center bg-transparent px-2 text-2xl p-4
-          border-4 border-brdr
+          border border-brdr
           focus:outline-none' 
           
           ref={nameRef} onChange={()=>setName(nameRef.current.value)}/>
 
-        <button onClick={handleClick} className='w-2/3 p-4 text-2xl border-4 border-brdr text-black bg-white'>Login</button>  
+        <button onClick={handleClick} className='w-2/3 p-4 text-2xl text-black bg-white'>Login</button>  
 
     </div>
   )
