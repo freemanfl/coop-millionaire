@@ -51,7 +51,7 @@ const Chat = ({room, name, playerId}) => {
   return (
     <div className='chat container overflow-hidden space-y-2
                     border-none'>
-                <div className="container messages justify-start items-start space-y-2 p-2">
+                <div className="container messages justify-start items-start space-y-2 p-2 border border-brdr">
                     {error && <strong>Error: {error}</strong>}
                     {loading && <span>List: Loading...</span>}
                     {(!loading && messages) && messages.map(msg => <Message key={msg.key} message={msg} playerId={playerId} />)}
@@ -59,7 +59,7 @@ const Chat = ({room, name, playerId}) => {
                 </div>
                 <form onSubmit={handleSubmit} className="lobby-input container p-0 flex-row h-auto border-none">
                     <input ref={inputRef} type="text" maxLength='120' className='w-full  h-12 bg-transparent px-2 self-end
-                        border-4 border-brdr
+                        border border-brdr
                         focus:outline-none'/>
 
                     <button  type='submit' className='w-32 h-12 border border-brdr border-l-0 text-black bg-white'>&#x27A4;</button> 
